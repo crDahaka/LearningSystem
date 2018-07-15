@@ -7,8 +7,10 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
+    using AutoMapper;
     using LearningSystem.Data;
     using LearningSystem.Data.Models;
+    using LearningSystem.Web.Infrastructure.Extensions;
 
     public class Startup
     {
@@ -27,11 +29,15 @@
                 .AddEntityFrameworkStores<LearningSystemDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAutoMapper();
+
             services.AddMvc();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDatabaseMigration();
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
